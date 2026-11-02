@@ -1,4 +1,4 @@
-const CACHE = 'diff-invites-v2';
+const CACHE = 'diff-invites-v3-canva';
 const ASSETS = [
   './',
   './index.html',
@@ -42,7 +42,11 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => cached);
-      return cached || fetched;
+      return fetched.then((r) => r || cached);
     })
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
