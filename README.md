@@ -1,30 +1,24 @@
 # Diff Invitations Studio
 
-Standalone installable PWA for editing Philippine event invitation templates — customize names, colors, fonts, and photos, then download PNG, share, or order a custom design on Facebook.
+Canva-like installable PWA for Philippine event invitations — tap any element to move, resize, rotate, and edit. Prices from **₱299**.
 
 **Live:** https://mayzraviz.github.io/diff-invitations-studio/
 
-**Repo:** https://github.com/MAYZRAVIZ/diff-invitations-studio
+**Build:** `canva-v3-20261102`
 
 ## Install
-
-- **iPhone:** Open in Safari → Share → Add to Home Screen
-- **Android:** Open in Chrome → menu → Install app (or Add to Home Screen)
+- **iPhone:** Safari → Share → Add to Home Screen
+- **Android:** Chrome → Install app
 
 ## Features
-
-- 10 unique occasion templates
-- Live editor (text, palette, fonts, photo upload)
-- PNG download & native share
-- Order link: [Facebook](https://www.facebook.com/share/19ZiMRxuKm/?mibextid=wwXIfr)
-- Offline via service worker
-- Hot-pink house brand mark
+- 10 editable templates (element-based, not flat images)
+- Direct manipulation: drag, resize handles, rotate, double-tap text
+- Add text / photo / shapes · undo/redo · autosave
+- PNG export (iOS share sheet / long-press save)
+- Order: https://www.facebook.com/share/19ZiMRxuKm/?mibextid=wwXIfr
 
 ## Local
-
 ```bash
-./decode-icons.sh   # builds PNG icons from *.b64
+./decode-icons.sh
 npx --yes serve -l 4173
 ```
-
-PNG icons are stored as `*.png.b64` (GitHub connector text uploads) and decoded by `decode-icons.sh` / the Pages deploy workflow.
