@@ -1,13 +1,18 @@
-const CACHE = 'diff-invites-v1';
+const CACHE = 'diff-invites-v2';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
   './manifest.json',
+  './logo.svg',
+  './icon-192.svg',
+  './icon-512.svg',
   './icon-192.png',
   './icon-512.png',
-  './apple-touch-icon.png'
+  './apple-touch-icon.png',
+  './favicon-32.png',
+  './favicon.ico'
 ];
 
 self.addEventListener('install', (event) => {
