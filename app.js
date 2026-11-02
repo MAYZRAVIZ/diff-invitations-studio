@@ -1,4 +1,4 @@
-/* Diff Invitations Studio — Canva-like editor BUILD_MARKER=canva-v3-20261102 */
+/* Diff Invitations Studio — Canva-like editor BUILD_MARKER=canva-v3-splash-20261102 */
 (function () {
   "use strict";
 
@@ -6,7 +6,7 @@
   const LIVE_APP = "https://mayzraviz.github.io/diff-invitations-studio/";
   const STORAGE_KEY = "diff-invites-canva-v3";
   const W = 360, H = 640;
-  const BUILD_MARKER = "canva-v3-20261102";
+  const BUILD_MARKER = "canva-v3-splash-20261102";
 
   const FONTS = {
     serif: 'Georgia, "Times New Roman", Times, serif',
@@ -1074,6 +1074,118 @@
     });
   }
 
+
+  // —— Splash + Install (iOS / Android) ——
+  const SPLASH_KEY = "diff-invites-splash-seen-v1";
+  let deferredInstallPrompt = null;
+  let showIosSheet = false;
+
+  function isStandalone() {
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches)
+      || window.navigator.standalone === true;
+  }
+  function isIos() {
+    const ua = navigator.userAgent || "";
+    return /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  }
+  function hideSplash() {
+    const splash = document.getElementById("splash");
+    if (splash) splash.classList.add("hidden");
+    document.body.classList.remove("show-splash");
+    try { sessionStorage.setItem(SPLASH_KEY, "1"); } catch (_) {}
+  }
+  function showSplashIfNeeded() {
+    if (isStandalone()) {
+      document.body.classList.add("standalone-app");
+      hideSplash();
+      const btn = document.getElementById("btn-install-app");
+      if (btn) btn.style.display = "none";
+      return;
+    }
+    let seen = false;
+    try { seen = sessionStorage.getItem(SPLASH_KEY) === "1"; } catch (_) {}
+    if (seen) { hideSplash(); return; }
+    document.body.classList.add("show-splash");
+    const splash = document.getElementById("splash");
+    if (splash) splash.classList.remove("hidden");
+    updateInstallButtonVisibility();
+  }
+  function updateInstallButtonVisibility() {
+    const btn = document.getElementById("btn-install-app");
+    if (!btn) return;
+    if (isStandalone()) { btn.style.display = "none"; return; }
+    btn.style.display = "";
+  }
+  function renderIosSheet() {
+    const root = document.getElementById("ios-install-root");
+    if (!root) return;
+    if (!showIosSheet) { root.innerHTML = ""; return; }
+    root.innerHTML = `
+      <div class="ios-sheet-backdrop" id="ios-sheet-backdrop">
+        <div class="ios-sheet" role="dialog" aria-label="Install on iPhone">
+          <div class="ios-illus" aria-hidden="true">
+            <span>⬆️</span><span style="font-size:18px;color:#666">Share</span>
+            <span>→</span>
+            <span>➕</span><span style="font-size:18px;color:#666">Add to Home Screen</span>
+          </div>
+          <h3>Install Diff Invitations</h3>
+          <p>Add this app to your Home Screen for a full-screen, offline-ready experience. No App Store needed.</p>
+          <div class="ios-steps">
+            <div class="ios-step"><div class="num">1</div><div class="label">Tap the <strong>Share</strong> button in Safari (square with an arrow up).</div></div>
+            <div class="ios-step"><div class="num">2</div><div class="label">Scroll and tap <strong>Add to Home Screen</strong>.</div></div>
+            <div class="ios-step"><div class="num">3</div><div class="label">Tap <strong>Add</strong> — then open Diff Invites from your Home Screen.</div></div>
+          </div>
+          <button type="button" class="btn-close" id="btn-close-ios-sheet">Got it</button>
+        </div>
+      </div>`;
+    const close = () => { showIosSheet = false; renderIosSheet(); };
+    document.getElementById("btn-close-ios-sheet")?.addEventListener("click", close);
+    document.getElementById("ios-sheet-backdrop")?.addEventListener("click", (e) => {
+      if (e.target.id === "ios-sheet-backdrop") close();
+    });
+  }
+  async function onInstallClick() {
+    if (isStandalone()) return;
+    // iOS Safari never gets beforeinstallprompt — always show the guide.
+    if (isIos()) {
+      showIosSheet = true;
+      renderIosSheet();
+      return;
+    }
+    if (deferredInstallPrompt) {
+      try {
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        updateInstallButtonVisibility();
+        if (choice && choice.outcome === "accepted") showToast("App installed");
+      } catch (_) {
+        showToast("Install prompt unavailable — use browser menu → Install app");
+      }
+      return;
+    }
+    showToast("Use your browser menu → Install app / Add to Home Screen");
+  }
+  function wireSplash() {
+    const start = document.getElementById("btn-start-designing");
+    const install = document.getElementById("btn-install-app");
+    if (start) start.addEventListener("click", () => { hideSplash(); render(); });
+    if (install) install.addEventListener("click", onInstallClick);
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      updateInstallButtonVisibility();
+    });
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      updateInstallButtonVisibility();
+      hideSplash();
+      showToast("Installed — open from Home Screen");
+    });
+    showSplashIfNeeded();
+  }
+
+
   // Restore autosave
   const saved = loadAutosave();
   if (saved && saved.doc) {
@@ -1083,5 +1195,6 @@
   }
 
   window.__DIFF_BUILD__ = BUILD_MARKER;
+  wireSplash();
   render();
 })();

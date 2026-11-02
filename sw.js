@@ -1,4 +1,4 @@
-const CACHE = 'diff-invites-v3-canva';
+const CACHE = 'diff-invites-v3-splash';
 const ASSETS = [
   './',
   './index.html',

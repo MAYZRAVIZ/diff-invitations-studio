@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Diff Invites" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="diff-build" content="canva-v3-20261102" />
+  <meta name="diff-build" content="canva-v3-splash-20261102" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon" href="favicon.ico" />
@@ -18,9 +18,23 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- BUILD_MARKER=canva-v3-20261102 -->
-  <div class="build-marker" data-build="canva-v3-20261102" hidden></div>
-  <div id="app"></div>
+  <!-- BUILD_MARKER=canva-v3-splash-20261102 -->
+  <div class="build-marker" data-build="canva-v3-splash-20261102" hidden></div>
+  <div id="splash" class="splash" aria-label="Welcome">
+  <div class="splash-inner">
+    <div class="splash-icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><g transform="rotate(-20 60 62)"><rect x="28" y="52" width="64" height="48" rx="10" fill="#FF3E9A"/><path d="M22 58 L60 18 L98 58 Z" fill="#FF3E9A"/><circle cx="60" cy="20" r="8" fill="#FF3E9A"/><circle cx="26" cy="56" r="8" fill="#FF3E9A"/><circle cx="94" cy="56" r="8" fill="#FF3E9A"/><rect x="42" y="68" width="10" height="18" rx="5" fill="#fff"/><rect x="68" y="68" width="10" height="18" rx="5" fill="#fff"/></g></svg>
+    </div>
+    <h1>Diff Invitations</h1>
+    <p class="tagline">Editable invitations for every event. From ₱299.</p>
+    <div class="splash-actions">
+      <button type="button" class="btn-install" id="btn-install-app">Install App</button>
+      <button type="button" class="btn-start" id="btn-start-designing">Start designing</button>
+    </div>
+  </div>
+</div>
+<div id="ios-install-root"></div>
+<div id="app"></div>
   <nav class="nav" aria-label="Main">
     <div class="nav-inner">
       <button type="button" data-tab="gallery" class="active"><span class="ico">▦</span>Templates</button>
