@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <g transform="rotate(-20 60 62)">
+    <!-- body -->
+    <rect x="28" y="52" width="64" height="48" rx="10" fill="#FF3E9A"/>
+    <!-- roof -->
+    <path d="M22 58 L60 18 L98 58 Z" fill="#FF3E9A"/>
+    <circle cx="60" cy="20" r="8" fill="#FF3E9A"/>
+    <circle cx="26" cy="56" r="8" fill="#FF3E9A"/>
+    <circle cx="94" cy="56" r="8" fill="#FF3E9A"/>
+    <!-- eyes -->
+    <rect x="42" y="68" width="10" height="18" rx="5" fill="#fff"/>
+    <rect x="68" y="68" width="10" height="18" rx="5" fill="#fff"/>
+  </g>
+</svg>
