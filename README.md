@@ -4,6 +4,8 @@ Standalone installable PWA for editing Philippine event invitation templates —
 
 **Live:** https://mayzraviz.github.io/diff-invitations-studio/
 
+**Repo:** https://github.com/MAYZRAVIZ/diff-invitations-studio
+
 ## Install
 
 - **iPhone:** Open in Safari → Share → Add to Home Screen
@@ -16,11 +18,13 @@ Standalone installable PWA for editing Philippine event invitation templates —
 - PNG download & native share
 - Order link: [Facebook](https://www.facebook.com/share/19ZiMRxuKm/?mibextid=wwXIfr)
 - Offline via service worker
+- Hot-pink house brand mark
 
 ## Local
 
-Serve the folder over HTTP (required for service worker / PWA):
-
 ```bash
+./decode-icons.sh   # builds PNG icons from *.b64
 npx --yes serve -l 4173
 ```
+
+PNG icons are stored as `*.png.b64` (GitHub connector text uploads) and decoded by `decode-icons.sh` / the Pages deploy workflow.
